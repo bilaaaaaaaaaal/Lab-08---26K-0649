@@ -1,0 +1,109 @@
+#include <stdio.h>
+int main(){
+    int S[3][3];
+    int P[3][2];
+    int product[3][2]={0};
+    int sales,cost,selling,profit1=0,profit2=0,profit3=0,max=-100;
+    float newprofit1=0,newprofit2=0,newprofit3=0,newmax=-100;
+    for(int branch=0;branch<3;branch++){
+        for(int product=0;product<3;product++){
+            printf("enter sales of product %d of branch %d\n",product+1,branch+1);
+            scanf("%d",&sales);
+            S[branch][product]=sales;
+        }
+    }
+    for(int product=0;product<3;product++){
+        printf("enter cost price of product %d\n",product+1);
+        scanf("%d",&cost);
+        printf("enter selling price of product %d\n",product+1);
+        scanf("%d",&selling);
+        P[product][0]=cost;
+        P[product][1]=selling;
+    }
+    for(int row=0;row<3;row++){
+        for(int column=0;column<2;column++){
+            for(int summing=0;summing<3;summing++){
+                product[row][column]+=S[row][summing]*P[summing][column];
+            }
+        }
+    }
+    for(int row=0;row<3;row++){
+        if(row==0){
+            profit1=product[row][1]-product[row][0];
+        }
+        else if(row==1){
+            profit2=product[row][1]-product[row][0];
+        }
+        else if(row==2){
+            profit3=product[row][1]-product[row][0];
+        }
+    }
+    if(profit1>max){
+        max=profit1;
+    }
+    if(profit2>max){
+        max=profit2;
+    }
+    if(profit3>max){
+        max=profit3;
+    }
+    if(profit1==profit2 && (profit1==max || profit2==max)){
+        printf("tie between profit 1 %d and profit 2 %d\n",profit1,profit2);
+    }
+    else if(profit1==profit3 && (profit1==max || profit3==max)){
+        printf("tie between profit 1 %d and profit 3 %d\n",profit1,profit3);
+    }
+    else if(profit3==profit2 && (profit3==max || profit2==max)){
+        printf("tie between profit 3 %d and profit 2 %d\n",profit3,profit2);
+    }
+    else{
+        printf("maximum profit was %d\n",max);
+    }    
+    float newP[3][2];
+    for(int row=0;row<3;row++){
+        for(int column=0;column<2;column++){
+            newP[row][0]=P[row][0];
+            newP[row][1]=P[row][1]*0.9;
+        }
+    }
+    int newproduct[3][2]={0};
+    for(int row=0;row<3;row++){
+        for(int column=0;column<2;column++){
+            for(int summing=0;summing<3;summing++){
+                newproduct[row][column]+=S[row][summing]*newP[summing][column];
+            }
+        }
+    }
+    for(int row=0;row<3;row++){
+        if(row==0){
+            newprofit1=newproduct[row][1]-newproduct[row][0];
+        }
+        else if(row==1){
+            newprofit2=newproduct[row][1]-newproduct[row][0];
+        }
+        else if(row==2){
+            newprofit3=newproduct[row][1]-newproduct[row][0];
+        }
+    }
+    if(newprofit1>newmax){
+        newmax=newprofit1;
+    }
+    if(newprofit2>newmax){
+        newmax=newprofit2;
+    }
+    if(newprofit3>newmax){
+        newmax=newprofit3;
+    }
+    if(newprofit1==newprofit2 && (newprofit1==newmax || newprofit2==newmax)){
+        printf("tie between profit 1 %f and profit 2 %f\n",newprofit1,newprofit2);
+    }
+    else if(newprofit1==newprofit3 && (newprofit1==newmax || newprofit3==newmax)){
+        printf("tie between profit 1 %f and new profit 3 %f\n",newprofit1,newprofit3);
+    }
+    else if(newprofit3==newprofit2 && (newprofit3==newmax || newprofit2==newmax)){
+        printf("tie between new profit 3 %f and new profit 2 %f\n",newprofit3,newprofit2);
+    }
+    else{
+        printf("maximum new profit was %f\n",newmax);
+    }
+}
