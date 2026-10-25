@@ -1,0 +1,85 @@
+#include <stdio.h>
+#include <string.h>
+int main(){
+    char charIn;
+    int count=0,mainDsum=0,otherDsum=0,identity=1,keyvar;
+    char characterlist[2][2];
+    int K[2][2];
+    int M[2][2];
+    int E[2][2]={0};
+    int transposeE[2][2];
+    printf("enter a 2x2 key matrix\n");
+    for(int row=0;row<2;row++){
+        for(int col=0;col<2;col++){
+            count+=1;
+            printf("enter number %d\n",count);
+            scanf("%d",&keyvar);
+            K[row][col]=keyvar;
+        }
+    }
+    count=0;
+    printf("enter a 4 letter word letter by letter\n");
+    for(int row=0;row<2;row++){
+        for(int col=0;col<2;col++){
+            count+=1;
+            printf("enter letter %d\n",count);
+            scanf(" %c",&charIn);
+            characterlist[row][col]=charIn;
+        }
+    }
+    for(int row=0;row<2;row++){
+        for(int col=0;col<2;col++){
+            M[row][col]=(characterlist[row][col])-64;
+        }
+    }
+    for(int row=0;row<2;row++){
+        for(int col=0;col<2;col++){
+            for(int varying=0;varying<2;varying++){
+                E[row][col]+=K[row][varying]*M[varying][col];
+            }
+        }
+    }
+    for(int row=0;row<2;row++){
+        for(int col=0;col<2;col++){
+            transposeE[col][row]=E[row][col];
+        }
+    }
+    printf("\nTRANSPOSE OF E\n");
+    for(int row=0;row<2;row++){
+        for(int col=0;col<2;col++){
+            printf("%d ",transposeE[row][col]);
+        }
+        printf("\n");
+    }
+    for(int row=0;row<2;row++){
+        for(int col=0;col<2;col++){
+            if(row==col){
+                mainDsum+=E[row][col];
+            }
+            else{
+                otherDsum+=E[row][col];
+            }
+        }
+    }
+    if(mainDsum>otherDsum){
+        printf("Safe\n");
+    }
+    else{
+        printf("Unsafe\n");
+    }
+    for(int row=0;row<2;row++){
+        for(int col=0;col<2;col++){
+            if(row==col){
+                if(K[row][col]!=1){
+                    identity=0;
+                }
+            }
+            else if(K[row][col]!=0){
+                identity=0;
+            }   
+        }
+    }
+    if(identity==1){
+        printf("Warning: key is too weak");
+    }
+}
